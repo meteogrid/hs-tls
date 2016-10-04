@@ -115,6 +115,7 @@ onRecvStateHandshake ctx (RecvStateHandshake f) (x:xs) = do
     nstate <- f x
     processHandshake ctx x
     onRecvStateHandshake ctx nstate xs
+onRecvStateHandshake _ (RecvStateNext f) xs = f (Handshake xs)
 onRecvStateHandshake _ _ _   = unexpected "spurious handshake" Nothing
 
 runRecvState :: Context -> RecvState IO -> IO ()
